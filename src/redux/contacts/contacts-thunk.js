@@ -1,10 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { addContacts, deleteContacts, getContacts } from 'services/contactsAPI';
+// import { addContacts, deleteContacts, getContacts } from 'services/contactsAPI';
+import {
+  addContact,
+  deleteContact,
+  getContacts,
+  token,
+} from 'services/usersAPI';
 
 export const getContactsThunk = createAsyncThunk(
   'contacts/fetchAll',
-  async (_, { rejectWithValue }) => {
+  async (event, { rejectWithValue, getState }) => {
     try {
+      const savedToken = getState().auth.token;
+      if (!savedToken) {
+        return rejectWithValue('Token is invalid');
+      }
+      token.set(savedToken);
       const data = await getContacts();
       return data;
     } catch (error) {
@@ -15,9 +26,9 @@ export const getContactsThunk = createAsyncThunk(
 
 export const addContactsThunk = createAsyncThunk(
   'contacts/addContact',
-  async (newContact, { rejectWithValue }) => {
+  async (contact, { rejectWithValue }) => {
     try {
-      const data = await addContacts(newContact);
+      const data = await addContact(contact);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -29,7 +40,7 @@ export const deleteContactsThunk = createAsyncThunk(
   'contacts/deleteContact',
   async (id, { rejectWithValue }) => {
     try {
-      const data = await deleteContacts(id);
+      const data = await deleteContact(id);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);

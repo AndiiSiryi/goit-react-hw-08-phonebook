@@ -12,7 +12,7 @@ const ContactList = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchContacts = async () => {
+    const fetchContact = async () => {
       try {
         await dispatch(getContactsThunk());
       } catch (error) {
@@ -21,7 +21,7 @@ const ContactList = () => {
         setLoading(false);
       }
     };
-    fetchContacts();
+    fetchContact();
   }, [dispatch]);
 
   return (
@@ -30,9 +30,14 @@ const ContactList = () => {
         <Loader className={css.loader} />
       ) : (
         <ul className={css.list}>
-          {contacts.map(({ id, name, phone }) => {
+          {contacts.map(({ id, name, number }) => {
             return (
-              <ContactItem key={id} name={name} phone={phone} contactId={id} />
+              <ContactItem
+                key={id}
+                name={name}
+                number={number}
+                contactId={id}
+              />
             );
           })}
         </ul>

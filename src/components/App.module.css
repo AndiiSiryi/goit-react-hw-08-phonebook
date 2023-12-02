@@ -5,3 +5,29 @@
   margin: 20px auto;
   width: 500px;
 }
+
+.container {
+  width: 1280px;
+  margin: 0 auto;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.contactForm {
+  display: flex;
+}
+
+.form {
+  width: 650px;
+  margin: 0 auto 15px;
+  padding: 15px;
+  padding-bottom: 60px;
+  position: relative;
+
+  border-radius: 4px;
+}
+.title {
+  text-align: center;
+}

@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { deleteContactsThunk } from 'redux/contacts/contacts-thunk';
 import { Notify } from 'notiflix';
 
-const ContactItem = ({ name, phone, contactId }) => {
+const ContactItem = ({ name, number, contactId }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
@@ -23,7 +23,7 @@ const ContactItem = ({ name, phone, contactId }) => {
   };
   return (
     <li key={contactId} className={css.item}>
-      {name}: {phone}
+      {name}: {number}
       <button
         className={css.buttonDelet}
         type="button"

@@ -14,7 +14,7 @@ import { Notify } from 'notiflix';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [number, setNumber] = useState('');
   const [loading, setLoading] = useState(false);
 
   const validateName = name => {
@@ -22,10 +22,10 @@ const ContactForm = () => {
     return nameRegex.test(name);
   };
 
-  const validateNumber = phone => {
+  const validateNumber = number => {
     // const phoneRegex = /^\d{7}$|^\d{3}-\d{2}-\d{2}$/;
     const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
-    return phoneRegex.test(phone);
+    return phoneRegex.test(number);
   };
 
   const dispatch = useDispatch();
@@ -37,8 +37,8 @@ const ContactForm = () => {
     const { name, value } = e.target;
     if (name === 'name') {
       setName(value);
-    } else if (name === 'phone') {
-      setPhone(value);
+    } else if (name === 'number') {
+      setNumber(value);
     }
   };
 
@@ -52,7 +52,7 @@ const ContactForm = () => {
       return;
     }
 
-    if (!validateNumber(phone)) {
+    if (!validateNumber(number)) {
       Notify.failure(
         'The phone number must contain only 10 digits, example: XXX-XXX-XXXX.'
       );
@@ -62,7 +62,7 @@ const ContactForm = () => {
     const newContact = {
       id: nanoid(4),
       name: name,
-      phone: phone,
+      number: number,
     };
 
     if (
@@ -78,7 +78,7 @@ const ContactForm = () => {
       setLoading(true);
       await dispatch(addContactsThunk(newContact));
       setName('');
-      setPhone('');
+      setNumber('');
       Notify.success(`Contact "${newContact.name}"  added successfully`);
     } catch (error) {
       Notify.error(
@@ -94,6 +94,7 @@ const ContactForm = () => {
 
   return (
     <form className={css.form} onSubmit={handleSubmit}>
+      Fill to add a contact:
       <label className={css.label}>
         Name:
         <input
@@ -112,8 +113,8 @@ const ContactForm = () => {
           className={css.input}
           id="numberInput"
           type="tel"
-          name="phone"
-          value={phone}
+          name="number"
+          value={number}
           onChange={handleChange}
           required
         />
