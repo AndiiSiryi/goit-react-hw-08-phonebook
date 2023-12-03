@@ -3,7 +3,7 @@ import LogInPage from 'pages/LogInPage';
 import SignUpPage from 'pages/SingUpPage';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { refreshUserThunk } from 'redux/users/users-thunk';
 import Navigation from './Navigation/Navigation';
 import { PrivateRoute } from './PrivateRoute/PrivateRoute';
@@ -23,6 +23,7 @@ const App = () => {
         <Route path="/" element={<PublicRoute />}>
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LogInPage />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Route>
         <Route path="/" element={<PrivateRoute />}>
           <Route path="/contacts" element={<Contacts />} />
